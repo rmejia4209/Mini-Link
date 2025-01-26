@@ -1,0 +1,8 @@
+# IDE
+.vscode
+
+#Environment
+.venv
+
+# Other
+.DS_Store
