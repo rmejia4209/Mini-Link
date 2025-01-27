@@ -1,4 +1,4 @@
-name: Python Linter
+name: API Test
 
 on:
   push:
