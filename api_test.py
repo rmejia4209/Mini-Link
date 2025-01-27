@@ -7,7 +7,7 @@ class RegexUnitTest(unittest.TestCase):
 
     def get_mini_url(self, url: str) -> int:
         """
-        Returns the API's resonse status code for a post request with
+        Returns the API's response status code for a post request with
         the given URL.
         """
         res = requests.post(self.base_url, json={'url': url})
@@ -44,6 +44,27 @@ class RegexUnitTest(unittest.TestCase):
         ]
         expected_status = 422
         self.check_results(urls, expected_status)
+
+    def test_valid_domains(self) -> None:
+        """Tests URL's with valid domains"""
+        urls = [
+            'https://google.com', 'https://wikipedia.org',
+            'https://php.net', 'https://snake.io',
+            'https://oregonstate.edu', 'https://irs.gov'
+        ]
+        expected_status = 200
+        self.check_results(urls, expected_status)
+
+    def test_invalid_domains(self) -> None:
+        """Tests URL's with valid domains"""
+        urls = [
+            'https://google.comm', 'https://wikipedia.fr',
+            'https://php.php', 'https://snake.oi',
+            'https://oregonstate.osu', 'https://irs.goov'
+        ]
+        expected_status = 422
+        self.check_results(urls, expected_status)
+
 
 
 if __name__ == '__main__':
