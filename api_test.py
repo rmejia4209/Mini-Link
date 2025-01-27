@@ -66,6 +66,5 @@ class RegexUnitTest(unittest.TestCase):
         self.check_results(urls, expected_status)
 
 
-
 if __name__ == '__main__':
     unittest.main()

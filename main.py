@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel, Field
 
 
-url_pattern = r'^https?:\/\/[a-zA-Z0-9\-._~]+$'
+url_pattern = r'^https?:\/\/[a-zA-Z0-9\-._~]+(?:\.(com|org|net|io|edu|gov))$'
 
 
 class URL(BaseModel):
