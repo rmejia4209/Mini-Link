@@ -3,6 +3,7 @@
 
 #Environment
 .venv
+.env
 
 # Other
 .DS_Store
