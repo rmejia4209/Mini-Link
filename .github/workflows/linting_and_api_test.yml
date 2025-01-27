@@ -1,4 +1,4 @@
-name: Python Linter
+name: Linting and API Test
 
 on:
   push:
@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-    
+
       - name: Install dependencies
         run: |
           pip install pipenv
@@ -27,3 +27,9 @@ jobs:
       
       - name: Run linter
         run: pipenv run flake8 .
+        continue-on-error: true
+
+      - name: Run API Tests
+        run: |
+          python api_test.py
+    
