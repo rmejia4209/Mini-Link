@@ -4,14 +4,23 @@ from utils import get_url_pattern_match
 
 class RegexUnitTest(unittest.TestCase):
 
-    def test_url_protocol(self):
+    def test_valid_url_protocols(self):
         """
-        Test if the regex correcly matches the url's protocol
+        Test if the regex correcly matches URL's with the correct protocol.
         """
-        valid_samples = ['http://google.com', 'https://google.com']
-        for sample in valid_samples:
+        samples = ['http://google.com', 'https://google.com']
+        for sample in samples:
             with self.subTest(sample=sample):
                 self.assertEqual(get_url_pattern_match(sample), sample)
+
+    def test_invalid_url_protocols(self):
+        """
+        Test if the regex does not match URL's with incorrect protocols
+        """
+        samples = ['htp://google.com', 'ssh://google.com', 'google.com']
+        for sample in samples:
+            with self.subTest(sample=sample):
+                self.assertFalse(get_url_pattern_match(sample))
 
 
 if __name__ == '__main__':
