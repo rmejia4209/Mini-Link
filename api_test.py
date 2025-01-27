@@ -17,7 +17,21 @@ class RegexUnitTest(unittest.TestCase):
         """
         Test if the regex does not match URL's with incorrect protocols
         """
-        samples = ['htp://google.com', 'ssh://google.com', 'google.com']
+        samples = [
+            'htp://google.com', 'ssh://google.com', 'google.com',
+            'http//google.com', 'https:/google.com', r'https:\\google.com'
+            ]
+        for sample in samples:
+            with self.subTest(sample=sample):
+                self.assertFalse(get_url_pattern_match(sample))
+
+    def test_invalid_authority(self):
+
+        samples = [
+            'https:///google.com', 'https://user:password@google.com',
+            'http://google/notallowed.com', 'http://google@notallowed.com',
+            'http://google?notallowed.com', 'http://google#notallowed.com'
+        ]
         for sample in samples:
             with self.subTest(sample=sample):
                 self.assertFalse(get_url_pattern_match(sample))

@@ -1,6 +1,6 @@
 import re
 
-url_pattern = r"^https?:\/\/.*"
+url_pattern = r"^https?:\/\/[a-zA-Z0-9\-._~]+$"
 
 
 def get_url_pattern_match(txt: str) -> str:
