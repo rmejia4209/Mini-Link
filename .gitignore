@@ -3,7 +3,10 @@
 
 #Environment
 .venv
+.env
 
 # Other
 .DS_Store
 __pycache__
+foo.py
+notes.md
