@@ -14,20 +14,20 @@ class RegexUnitTest(unittest.TestCase):
         return res.status_code
 
     def check_results(self, urls: list[str], expected_status: int) -> None:
-        """Tests the given URL's against the expected status code"""
+        """Test the given URL's against the expected status code"""
         for url in urls:
             with self.subTest(url=url):
                 status = self.get_mini_url(url)
                 self.assertEqual(expected_status, status)
 
     def test_valid_url_protocols(self) -> None:
-        """Tests URL's with valid protocols"""
+        """Test URL's with valid protocols"""
         urls = ['https://github.com', 'http://google.com']
         expected_status = 200
         self.check_results(urls, expected_status)
 
     def test_invalid_url_protocols(self) -> None:
-        """Tests URL's with invalid protocols"""
+        """Test URL's with invalid protocols"""
         urls = [
             'htp://google.com', 'ssh://google.com', 'google.com',
             'http//google.com', 'https:/google.com', r'https:\\google.com'
@@ -36,7 +36,7 @@ class RegexUnitTest(unittest.TestCase):
         self.check_results(urls, expected_status)
 
     def test_invalid_authority(self) -> None:
-        """Tests URL's with invalid authorities"""
+        """Test URL's with invalid authorities"""
         urls = [
             'https:///google.com', 'https://user:password@google.com',
             'http://google/notallowed.com', 'http://google@notallowed.com',
@@ -46,7 +46,7 @@ class RegexUnitTest(unittest.TestCase):
         self.check_results(urls, expected_status)
 
     def test_valid_domains(self) -> None:
-        """Tests URL's with valid domains"""
+        """Test URL's with valid domains"""
         urls = [
             'https://google.com', 'https://wikipedia.org',
             'https://php.net', 'https://snake.io',
@@ -56,7 +56,7 @@ class RegexUnitTest(unittest.TestCase):
         self.check_results(urls, expected_status)
 
     def test_invalid_domains(self) -> None:
-        """Tests URL's with valid domains"""
+        """Test URL's with valid domains"""
         urls = [
             'https://google.comm', 'https://wikipedia.fr',
             'https://php.php', 'https://snake.oi',
