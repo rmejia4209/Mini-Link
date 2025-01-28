@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 fastapi = {extras = ["standard"], version = "*"}
 requests = "*"
+sqlmodel = "*"
 
 [dev-packages]
 flake8 = "*"
