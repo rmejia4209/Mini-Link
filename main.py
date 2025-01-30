@@ -19,4 +19,3 @@ def trial_point(
     if not mini_link:
         raise HTTPException(status_code=404, detail='Mini Link Not Fond')
     return mini_link
-
