@@ -13,5 +13,5 @@ CREATE TABLE mini_links (
     url VARCHAR(1024) NOT NULL,
     alias VARCHAR(10) NOT NULL,
     expiration DATETIME NOT NULL,
-    visits INT DEFAULT 0
+    visits INT NOT NULL DEFAULT 0
 );

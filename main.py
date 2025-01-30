@@ -1,23 +1,22 @@
 
-from fastapi import FastAPI
-from pydantic import BaseModel, Field
-
-
-url_pattern = (
-    r"^https?:\/\/"
-    r"[a-zA-Z0-9\-._~]+"
-    r"(?:\.(com|org|net|io|edu|gov))"
-    r"(\/|\?.*|\/.*)?$"
-)
-
-
-class URL(BaseModel):
-    url: str = Field(pattern=url_pattern, example="https://google.com")
-
+from typing import Any, Annotated
+from fastapi import FastAPI, HTTPException, Depends
+from api_models import MiniLinkCreate, MiniLinkPublic
+from db import get_mini_link_details
 
 app = FastAPI()
 
 
 @app.post("/")
-def minify_url(long_url: URL) -> dict[str, str]:
+def minify_url(long_url: MiniLinkCreate) -> dict[str, str]:
     return {}
+
+
+@app.get("/{mini_link}", response_model=MiniLinkPublic)
+def trial_point(
+    mini_link: Annotated[str, Depends(get_mini_link_details)]
+) -> Any:
+    if not mini_link:
+        raise HTTPException(status_code=404, detail='Mini Link Not Fond')
+    return mini_link
+
