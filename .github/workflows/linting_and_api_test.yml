@@ -28,13 +28,7 @@ jobs:
       - name: Run linter
         run: pipenv run flake8 .
         continue-on-error: true
-      
-      - name: Start FastAPI Server
-        run: |
-          pipenv run fastapi dev main.py &
-          sleep 5
 
       - name: Run API Tests
-        run: |
-          pipenv run pytest
+        run: pipenv run pytest
     
