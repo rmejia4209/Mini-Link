@@ -36,5 +36,5 @@ jobs:
 
       - name: Run API Tests
         run: |
-          pipenv run python api_test.py
+          pipenv run pytest
     
