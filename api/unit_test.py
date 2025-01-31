@@ -1,6 +1,6 @@
 import pytest
 from pydantic import ValidationError
-from .main import MiniLinkCreate
+from .models import MiniLinkCreate
 
 
 invalid_protocols = [
