@@ -3,7 +3,7 @@ import dotenv
 from typing import Annotated
 from fastapi import Depends
 from sqlmodel import create_engine, Session, select
-from db_models import MiniLink
+from .models import MiniLink
 
 dotenv.load_dotenv()
 engine = create_engine(os.getenv('DB_URL'), echo=True)
