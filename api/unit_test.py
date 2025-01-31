@@ -40,7 +40,6 @@ def test_invalid_protocols(data):
         MiniLinkCreate(**data)
 
 
-
 @pytest.mark.parametrize("data", [{'url': url} for url in invalid_authorities])
 def test_invalid_authorities(data):
     with pytest.raises(ValidationError):

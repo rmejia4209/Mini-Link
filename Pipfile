@@ -9,6 +9,7 @@ requests = "*"
 sqlmodel = "*"
 pymysql = "*"
 httpx = "*"
+pytest = "*"
 
 [dev-packages]
 flake8 = "*"
