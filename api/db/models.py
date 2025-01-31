@@ -2,7 +2,7 @@ from sqlmodel import SQLModel, Field
 from datetime import datetime, timedelta
 
 
-class MiniLink(SQLModel, table=True):
+class MiniLinks(SQLModel, table=True):
     __tablename__ = 'mini_links'
     id: int = Field(default=None, primary_key=True)
     url: str = Field(max_length=1024, nullable=False)
