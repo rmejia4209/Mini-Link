@@ -8,6 +8,7 @@ fastapi = {extras = ["standard"], version = "*"}
 requests = "*"
 sqlmodel = "*"
 pymysql = "*"
+httpx = "*"
 
 [dev-packages]
 flake8 = "*"
