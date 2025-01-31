@@ -1,8 +1,8 @@
 
 from typing import Any, Annotated
 from fastapi import FastAPI, HTTPException, Depends
-from api_models import MiniLinkCreate, MiniLinkPublic
-from db import get_mini_link_details
+from .models import MiniLinkCreate, MiniLinkPublic
+from .db.queries import get_mini_link_details
 
 app = FastAPI()
 
