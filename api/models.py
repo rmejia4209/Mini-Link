@@ -11,7 +11,10 @@ url_pattern = (
 
 
 class MiniLinkCreate(BaseModel):
-    url: str = Field(pattern=url_pattern, example="https://google.com")
+    url: str = Field(
+        pattern=url_pattern,
+        json_schema_extra={'example': "https://google.com"}
+    )
     alias: str | None = Field(default=None, max_length=10)
 
 
