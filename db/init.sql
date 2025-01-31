@@ -15,4 +15,4 @@ CREATE TABLE mini_links (
     alias VARCHAR(10) NOT NULL UNIQUE,
     expiration DATETIME NOT NULL,
     visits INT NOT NULL DEFAULT 0
-);
+) AUTO_INCREMENT = 2704;
