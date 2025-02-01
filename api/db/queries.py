@@ -1,22 +1,10 @@
-import os
-import dotenv
 from typing import Annotated
 from fastapi import Depends
-from sqlmodel import create_engine, Session, select, desc
+from sqlmodel import Session, select, desc
+from .config import SessionDep
 from ..models import MiniLinkCreate
 from .models import MiniLink
 from ..utils import generate_alias
-
-dotenv.load_dotenv()
-engine = create_engine(os.getenv('DB_URL'), echo=int(os.getenv('VERBOSE')))
-
-
-def get_session():
-    with Session(engine) as session:
-        yield session
-
-
-SessionDep = Annotated[Session, Depends(get_session)]
 
 
 def get_mini_link_details(alias: str, session: SessionDep) -> MiniLink | None:
@@ -24,9 +12,7 @@ def get_mini_link_details(alias: str, session: SessionDep) -> MiniLink | None:
     return session.exec(query).first()
 
 
-def find_match(
-    mini_link: MiniLinkCreate, session: Session
-) -> int | None:
+def find_match(mini_link: MiniLinkCreate, session: Session) -> int | None:
     query = select(MiniLink.id).where(MiniLink.alias == mini_link.alias)
     match = session.exec(query).first()
     return match if match else None
