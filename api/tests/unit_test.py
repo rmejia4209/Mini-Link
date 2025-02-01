@@ -1,8 +1,8 @@
 import pytest
 import random
 from pydantic import ValidationError
-from .models import MiniLinkCreate
-from .utils import generate_alias, get_id_from_alias
+from ..models import MiniLinkCreate
+from ..utils import generate_alias, get_id_from_alias
 
 
 invalid_protocols = [
