@@ -69,4 +69,4 @@ def test_valid_domains(data) -> None:
 def test_one_to_one_alias_gen() -> None:
     rand_id = random.randint(52**2, 52**3-1)
     alias = generate_alias(rand_id)
-    assert (rand_id + 1) == get_id_from_alias(alias)
+    assert (rand_id) == get_id_from_alias(alias)
