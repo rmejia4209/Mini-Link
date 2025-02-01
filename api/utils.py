@@ -10,6 +10,7 @@ def get_chars() -> list[str]:
 
 
 def generate_alias(n: int) -> str:
+    n = n + 52**2 - 1
     chars = get_chars()
     base = len(chars)
     alias = ''

@@ -21,7 +21,7 @@ def find_match(mini_link: MiniLinkCreate, session: Session) -> int | None:
 def add_alias(mini_link: MiniLinkCreate, session: Session) -> MiniLinkCreate:
     query = select(MiniLink.id).order_by(desc(MiniLink.id)).limit(1)
     _id = session.exec(query).all()
-    _id = 52**2 if not _id else (_id[0] + 1)
+    _id = 1 if not _id else (_id[0] + 1)
     mini_link.alias = generate_alias(_id)
     match = find_match(mini_link, session)
 
