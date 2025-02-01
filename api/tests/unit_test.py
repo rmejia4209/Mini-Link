@@ -1,6 +1,8 @@
 import pytest
+import random
 from pydantic import ValidationError
-from .models import MiniLinkCreate
+from ..models import MiniLinkCreate
+from ..utils import generate_alias, get_id_from_alias
 
 
 invalid_protocols = [
@@ -35,30 +37,36 @@ valid_domains = [
 
 
 @pytest.mark.parametrize("data", [{'url': url} for url in invalid_protocols])
-def test_invalid_protocols(data):
+def test_invalid_protocols(data) -> None:
     with pytest.raises(ValidationError):
         MiniLinkCreate(**data)
 
 
 @pytest.mark.parametrize("data", [{'url': url} for url in invalid_authorities])
-def test_invalid_authorities(data):
+def test_invalid_authorities(data) -> None:
     with pytest.raises(ValidationError):
         MiniLinkCreate(**data)
 
 
 @pytest.mark.parametrize("data", [{'url': url} for url in invalid_domains])
-def test_invalid_domains(data):
+def test_invalid_domains(data) -> None:
     with pytest.raises(ValidationError):
         MiniLinkCreate(**data)
 
 
 @pytest.mark.parametrize("data", [{'url': url} for url in valid_protocols])
-def test_valid_protocols(data):
+def test_valid_protocols(data) -> None:
     mini_link = MiniLinkCreate(**data)
     assert mini_link.url == data['url']
 
 
 @pytest.mark.parametrize("data", [{'url': url} for url in valid_domains])
-def test_valid_domains(data):
+def test_valid_domains(data) -> None:
     mini_link = MiniLinkCreate(**data)
     assert mini_link.url == data['url']
+
+
+def test_one_to_one_alias_gen() -> None:
+    rand_id = random.randint(52**2, 52**3-1)
+    alias = generate_alias(rand_id)
+    assert (rand_id + 52**2 - 1) == get_id_from_alias(alias)
