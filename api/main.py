@@ -14,7 +14,7 @@ def minify_url(
 ) -> Any:
     if not mini_link:
         raise HTTPException(
-            status_code=422, detail='Alias already in use. Please try another'
+            status_code=409, detail='Alias already in use. Please try another'
         )
     return mini_link
 
