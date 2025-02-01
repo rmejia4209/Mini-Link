@@ -48,3 +48,11 @@ def test_case_sensitivity(payload) -> None:
     """
     res = client.post("/", json=payload)
     assert res.status_code == 200
+
+@pytest.mark.parametrize('alias', [data[0]['alias']])
+def test_redirect(alias) -> None:
+    res = client.get(f'/{alias}')
+    redirect_url = res.headers['location']
+    #print(redirect_url)
+    assert redirect_url == url
+    assert res.status_code == 301
