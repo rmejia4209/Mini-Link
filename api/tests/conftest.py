@@ -1,5 +1,5 @@
 import pytest
-from sqlmodel import SQLModel, create_engine, Session, StaticPool
+from sqlmodel import SQLModel, create_engine, Session, StaticPool, text
 from ..main import app
 from ..db.config import get_session
 
@@ -15,6 +15,8 @@ test_engine = create_engine(
 def init_test_db() -> None:
     """Initializes the database for the testing session"""
     SQLModel.metadata.create_all(test_engine)
+    with test_engine.connect() as conn:
+        conn.execute(text("PRAGMA case_sensitive_like = TRUE;"))
     yield
     SQLModel.metadata.drop_all(test_engine)
 
@@ -27,7 +29,7 @@ def get_test_session() -> Session:
 
 
 @pytest.fixture(scope="function", autouse=True)
-def override_dependencies(test_session):
+def override_dependencies(get_test_session):
     """Overrides get_session with get_test_session for database queries"""
     app.dependency_overrides[get_session] = lambda: get_test_session
     yield
