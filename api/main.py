@@ -1,10 +1,12 @@
 
 from typing import Any, Annotated
 from fastapi import FastAPI, HTTPException, Depends
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, Response
 from .models import MiniLinkPublic
 from .db.models import MiniLink
-from .db.queries import add_mini_link, get_mini_link_details, get_redirect_url
+from .db.queries import (
+    add_mini_link, get_mini_link_details, get_redirect_url, delete_mini_link
+)
 
 app = FastAPI()
 
@@ -34,3 +36,10 @@ def redirect(url: Annotated[str, Depends(get_redirect_url)]) -> Any:
     if not url:
         raise HTTPException(status_code=404, detail='Mini Link Not Found')
     return RedirectResponse(url=url, status_code=301)
+
+
+@app.delete('/{alias}', status_code=204, response_class=Response)
+def delete(mini_link: Annotated[MiniLink, Depends(delete_mini_link)]) -> None:
+    if not mini_link:
+        raise HTTPException(status_code=404, detail='Mini Link Not Found')
+    return
