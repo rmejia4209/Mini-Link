@@ -62,3 +62,11 @@ def test_invalid_redirect() -> None:
     """Test redirect status and url"""
     res = client.get(f'/{generate_alias(100)}', follow_redirects=False)
     assert res.status_code == 404
+
+
+@pytest.mark.parametrize('alias', [data[i]['alias'] for i in range(len(data))])
+def test_get_mini_link_info(alias) -> None:
+    """Test the details returned by the get-info alias"""
+    res = client.get(f'/get-info/{alias}')
+    info = res.json()
+    assert info['visits'] == 1

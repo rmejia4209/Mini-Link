@@ -12,6 +12,18 @@ def get_mini_link_details(alias: str, session: SessionDep) -> MiniLink | None:
     return session.exec(query).first()
 
 
+def get_redirect_url(alias: str, session: SessionDep) -> str | None:
+    query = select(MiniLink).where(MiniLink.alias == alias)
+    mini_link = session.exec(query).first()
+    if not mini_link:
+        return
+    mini_link.visits += 1
+    session.add(mini_link)
+    session.commit()
+    session.refresh(mini_link)
+    return mini_link.url
+
+
 def find_match(mini_link: MiniLinkCreate, session: Session) -> int | None:
     query = select(MiniLink.id).where(MiniLink.alias == mini_link.alias)
     match = session.exec(query).first()
