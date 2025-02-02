@@ -75,5 +75,5 @@ def test_get_mini_link_info(alias) -> None:
 @pytest.mark.parametrize('alias', [data[i]['alias'] for i in range(len(data))])
 def test_delete_mini_links(alias) -> None:
     """Test the delete endpoint"""
-    res = client.delete(f'/delete/{alias}')
+    res = client.delete(f'/{alias}')
     assert res.status_code == 204

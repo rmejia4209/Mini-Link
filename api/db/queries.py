@@ -24,6 +24,14 @@ def get_redirect_url(alias: str, session: SessionDep) -> str | None:
     return mini_link.url
 
 
+def delete_mini_link(alias: str, session: SessionDep) -> MiniLink | None:
+    mini_link = get_mini_link_details(alias, session)
+    if mini_link:
+        session.delete(mini_link)
+        session.commit()
+    return mini_link
+
+
 def find_match(mini_link: MiniLinkCreate, session: Session) -> int | None:
     query = select(MiniLink.id).where(MiniLink.alias == mini_link.alias)
     match = session.exec(query).first()
