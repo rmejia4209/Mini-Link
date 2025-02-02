@@ -1,6 +1,7 @@
 
 from typing import Any, Annotated
 from fastapi import FastAPI, HTTPException, Depends
+from fastapi.responses import RedirectResponse
 from .models import MiniLinkPublic
 from .db.models import MiniLink
 from .db.queries import add_mini_link, get_mini_link_details
@@ -19,10 +20,10 @@ def minify_url(
     return mini_link
 
 
-@app.get("/{alias}", response_model=MiniLinkPublic)
-def trial_point(
+@app.get("/{alias}")
+def redirect(
     mini_link: Annotated[MiniLink, Depends(get_mini_link_details)]
-) -> Any:
+) -> None:
     if not mini_link:
-        raise HTTPException(status_code=404, detail='Mini Link Not Fond')
-    return mini_link
+        raise HTTPException(status_code=404, detail='Mini Link Not Found')
+    return RedirectResponse(url=mini_link.url, status_code=301)
