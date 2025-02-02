@@ -50,9 +50,15 @@ def test_case_sensitivity(payload) -> None:
     assert res.status_code == 200
 
 
-@pytest.mark.parametrize('alias', [data[0]['alias']])
-def test_redirect(alias) -> None:
+@pytest.mark.parametrize('alias', [data[i]['alias'] for i in range(len(data))])
+def test_valid_redirect(alias) -> None:
     """Test redirect status and url"""
     res = client.get(f'/{alias}', follow_redirects=False)
     assert res.headers['location'] == url
     assert res.status_code == 301
+
+
+def test_invalid_redirect() -> None:
+    """Test redirect status and url"""
+    res = client.get(f'/{generate_alias(100)}', follow_redirects=False)
+    assert res.status_code == 404
