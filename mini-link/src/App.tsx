@@ -1,12 +1,11 @@
 
-import './App.css'
-import Button from './components/button'
+import LinkInput from './components/LinkInput';
 
 function App() {
 
   return (
     <>
-        <Button/>
+      <LinkInput/>
     </>
   )
 }
