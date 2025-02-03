@@ -4,9 +4,33 @@
 #Environment
 .venv
 .env
+node_modules
+dist
+dist-ssr
+*.local
 
 # Other
 .DS_Store
 __pycache__
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 foo.py
 notes.md
+
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+
+
+
