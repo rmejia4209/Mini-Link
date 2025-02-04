@@ -1,5 +1,6 @@
-import Logo from "./components/Logo"
-import MinifyLinkForm from "./composites/MinifyLinkForm"
+import Logo from "./components/Logo";
+import MinifyLinkForm from "./composites/MinifyLinkForm";
+import MiniLinkCards from "./composites/MiniLinkCards";
 
 function App() {
 
@@ -9,6 +10,7 @@ function App() {
       <div className="">
         <Logo/>
         <MinifyLinkForm/>
+        <MiniLinkCards/>
       </div>
     </>
   )
