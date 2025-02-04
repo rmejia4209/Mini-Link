@@ -3,13 +3,16 @@ import Link from "../icons/Link";
 
 
 interface LinkInputPropTypes {
+  value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 
-function LinkInput({ onChange } : LinkInputPropTypes) {
+function LinkInput({ value, onChange } : LinkInputPropTypes) {
   return (
     <BaseInput
+        name='url'
+        value={value}
         InputIcon={Link}
         placeHolder="https://github.com/rmejia4209/Mini-Link"
         onChange={onChange}

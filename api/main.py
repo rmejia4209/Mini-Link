@@ -1,6 +1,7 @@
 
 from typing import Any, Annotated
 from fastapi import FastAPI, HTTPException, Depends
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse, Response
 from .models import MiniLinkPublic
 from .db.models import MiniLink
@@ -8,7 +9,17 @@ from .db.queries import (
     add_mini_link, get_mini_link_details, get_redirect_url, delete_mini_link
 )
 
+origins = ['http://localhost:5173']
+
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.post("/", response_model=MiniLinkPublic)
