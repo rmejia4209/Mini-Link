@@ -11,6 +11,7 @@ interface LinkInputPropTypes {
 function LinkInput({ value, onChange } : LinkInputPropTypes) {
   return (
     <BaseInput
+        label="URL"
         name='url'
         value={value}
         InputIcon={Link}

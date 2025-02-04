@@ -10,8 +10,9 @@ interface AliasInputPropTypes {
 function AliasInput({ value, onChange } : AliasInputPropTypes): JSX.Element {
   return (
     <BaseInput
+      label="Alias"
       name='alias'
-      placeHolder="Alias (Optional)"
+      placeHolder="Optional"
       value={value}
       onChange={onChange}
     />
