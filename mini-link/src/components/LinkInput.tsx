@@ -1,5 +1,5 @@
 import BaseInput from "./base/BaseInput";
-import Link from "../icons/Link";
+import LinkIcon from "../icons/LinkIcon";
 
 
 interface LinkInputPropTypes {
@@ -11,9 +11,10 @@ interface LinkInputPropTypes {
 function LinkInput({ value, onChange } : LinkInputPropTypes) {
   return (
     <BaseInput
+        label="URL"
         name='url'
         value={value}
-        InputIcon={Link}
+        InputIcon={LinkIcon}
         placeHolder="https://github.com/rmejia4209/Mini-Link"
         onChange={onChange}
     />
