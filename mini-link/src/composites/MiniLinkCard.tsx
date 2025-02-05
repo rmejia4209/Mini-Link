@@ -20,19 +20,16 @@ function MiniLinkCard(
     return (
       <div className="card card-compact w-fit bg-neutral-content shadow-xl rounded-3xl">
       <div className="card-body">
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between items-center">
           <MiniLinkURL link={link}/>
           <button className="btn btn-xs btn-circle btn-error shadow-none">
             <DeleteIcon />
           </button>
         </div>
-        <div className="flex flex-row justify-between items-center">
-          <QRCodeWrapper value={link}/>
-          <MiniLinkVisits
-            currentMonthClicks={currentMonthClicks}
-            lastMonthClicks={lastMonthClicks} 
-          />
-        </div>
+        <MiniLinkVisits
+          currentMonthClicks={currentMonthClicks}
+          lastMonthClicks={lastMonthClicks} 
+        />
       </div>
     </div>
     )

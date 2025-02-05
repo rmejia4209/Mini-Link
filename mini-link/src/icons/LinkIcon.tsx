@@ -1,7 +1,7 @@
 
 
 
-export default function Link() {
+function LinkIcon() {
   return (
     <svg 
     xmlns="http://www.w3.org/2000/svg"
@@ -17,3 +17,5 @@ export default function Link() {
   </svg>
   )
 }
+
+export default LinkIcon;
