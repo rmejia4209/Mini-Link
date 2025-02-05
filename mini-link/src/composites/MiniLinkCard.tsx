@@ -1,34 +1,23 @@
+import { MiniLinkType } from "../types/common";
 import DeleteIcon from "../icons/DeleteIcon";
-import QRCodeWrapper from "../components/QRWrapper";
 import MiniLinkVisits from "../components/MiniLinkVisits";
 import MiniLinkURL from "../components/MiniLinkURL";
 
+const baseUrl = import.meta.env.VITE_API_URL;
 
 
-interface MiniLinkCardPropTypes {
-  link?: string,
-  currentMonthClicks?: number,
-  lastMonthClicks?: number
-}
-
-
-function MiniLinkCard(
-  {
-    link='Mini Link URL', currentMonthClicks=1000, lastMonthClicks=50
-  }: MiniLinkCardPropTypes
-): JSX.Element {
+function MiniLinkCard({ miniLink }: { miniLink: MiniLinkType }): JSX.Element {
     return (
       <div className="card card-compact w-fit bg-neutral-content shadow-xl rounded-3xl">
       <div className="card-body">
         <div className="flex flex-row justify-between items-center">
-          <MiniLinkURL link={link}/>
+          <MiniLinkURL miniLink={`${baseUrl}${miniLink.alias}`}/>
           <button className="btn btn-xs btn-circle btn-error shadow-none">
             <DeleteIcon />
           </button>
         </div>
         <MiniLinkVisits
-          currentMonthClicks={currentMonthClicks}
-          lastMonthClicks={lastMonthClicks} 
+          visits={miniLink.visits}
         />
       </div>
     </div>

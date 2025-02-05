@@ -1,16 +1,26 @@
+import { useState } from "react";
+import { MiniLinkType } from "./types/common";
 import Logo from "./components/Logo";
 import MinifyLinkForm from "./composites/MinifyLinkForm";
 import MiniLinkCards from "./composites/MiniLinkCards";
 
+
 function App() {
 
+  const [miniLinks, setMiniLinks] = useState<MiniLinkType[]>([]);
+
+  // get all mini links here
+
+  const appendMiniLink = (newLink: MiniLinkType) => {
+    setMiniLinks([newLink, ...miniLinks])
+  }
 
   return (
     <>
       <div className="">
         <Logo/>
-        <MinifyLinkForm/>
-        <MiniLinkCards/>
+        <MinifyLinkForm appendMiniLink={appendMiniLink}/>
+        <MiniLinkCards miniLinks={miniLinks}/>
       </div>
     </>
   )
