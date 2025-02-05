@@ -2,11 +2,11 @@ import { useState } from "react";
 import CopyIcon from "../icons/CopyIcon";
 
 interface MiniLinkURLPropTypes {
-  link: string;
+  miniLink: string;
   isNew?: boolean;
 }
 
-function MiniLinkURL({ link, isNew }: MiniLinkURLPropTypes): JSX.Element {
+function MiniLinkURL({ miniLink, isNew }: MiniLinkURLPropTypes): JSX.Element {
 
   const [isHovering, setIsHovering] = useState(true);
 
@@ -18,7 +18,7 @@ function MiniLinkURL({ link, isNew }: MiniLinkURLPropTypes): JSX.Element {
       onMouseLeave={()=>setIsHovering(!isHovering)}
     >
       <h2 className="card-title m-1 text-secondary-content group-hover:text-info">
-        {link}
+        {miniLink}
         <CopyIcon isHidden={isHovering} />
       </h2>
     </button>
