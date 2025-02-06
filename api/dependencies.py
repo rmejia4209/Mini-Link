@@ -8,9 +8,6 @@ def get_user_session(req: Request, res: Response) -> str:
     if not session_id:
         session_id = str(uuid4())
         res.set_cookie("session_id", session_id)
-        print(f'Making: {session_id}')
-    else:
-        print(session_id)
     return session_id
 
 

@@ -3,6 +3,8 @@ from datetime import datetime, timedelta
 
 
 class UserSession(SQLModel, table=True):
+    __tablename__ = 'user_sessions'
+
     id: str = Field(primary_key=True)
 
 
@@ -16,4 +18,4 @@ class MiniLink(SQLModel, table=True):
         nullable=False
     )
     visits: int = Field(default=0, nullable=False)
-    #session_id: str = Field(foreign_key='user_sessions.id')
+    user_session_id: str = Field(foreign_key='user_sessions.id')
