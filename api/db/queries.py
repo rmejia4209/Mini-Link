@@ -8,8 +8,12 @@ from ..dependencies import UserSessionDep
 from ..utils import generate_alias
 
 
-def get_mini_link_details(alias: str, session: SessionDep) -> MiniLink | None:
-    query = select(MiniLink).where(MiniLink.alias == alias)
+def get_mini_link_details(
+    alias: str, user_session_id: UserSessionDep, session: SessionDep
+) -> MiniLink | None:
+    query = select(MiniLink).where(
+        MiniLink.alias == alias, MiniLink.user_session_id == user_session_id
+    )
     return session.exec(query).first()
 
 
@@ -25,8 +29,10 @@ def get_redirect_url(alias: str, session: SessionDep) -> str | None:
     return mini_link.url
 
 
-def delete_mini_link(alias: str, session: SessionDep) -> MiniLink | None:
-    mini_link = get_mini_link_details(alias, session)
+def delete_mini_link(
+    alias: str, user_session_id: UserSessionDep, session: SessionDep
+) -> MiniLink | None:
+    mini_link = get_mini_link_details(alias, user_session_id, session)
     if mini_link:
         session.delete(mini_link)
         session.commit()

@@ -76,7 +76,14 @@ def test_get_mini_links_on_different_session(alias) -> None:
     different session.
     """
     res = client_2.get(f'/get-info/{alias}')
-    assert res.status_code == 403
+    assert res.status_code == 404
+
+
+@pytest.mark.parametrize('alias', [data[i]['alias'] for i in range(len(data))])
+def test_delete_mini_links_on_different_session(alias) -> None:
+    """Test deleting on a different session"""
+    res = client_2.delete(f'/{alias}')
+    assert res.status_code == 404
 
 
 @pytest.mark.parametrize('alias', [data[i]['alias'] for i in range(len(data))])
