@@ -1,8 +1,9 @@
 
 from typing import Any, Annotated
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, HTTPException, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse, Response
+from uuid import uuid4
 from .models import MiniLinkPublic
 from .db.models import MiniLink
 from .db.queries import (

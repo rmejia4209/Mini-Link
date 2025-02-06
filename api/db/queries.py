@@ -4,6 +4,7 @@ from sqlmodel import Session, select, desc
 from .config import SessionDep
 from ..models import MiniLinkCreate
 from .models import MiniLink
+from ..dependencies import UserSessionDep
 from ..utils import generate_alias
 
 
@@ -52,7 +53,9 @@ def add_alias(mini_link: MiniLinkCreate, session: Session) -> MiniLinkCreate:
 
 
 def add_or_verify(
-    mini_link: MiniLinkCreate, session: SessionDep
+    mini_link: MiniLinkCreate,
+    session: SessionDep,
+    user_session: UserSessionDep
 ) -> MiniLinkCreate | None:
     if mini_link.alias:
         match_found = bool(find_match(mini_link, session))
