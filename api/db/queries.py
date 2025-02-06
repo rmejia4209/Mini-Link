@@ -3,12 +3,24 @@ from fastapi import Depends
 from sqlmodel import Session, select, desc
 from .config import SessionDep
 from ..models import MiniLinkCreate
-from .models import MiniLink
+from .models import MiniLink, UserSession
+from ..dependencies import UserSessionDep
 from ..utils import generate_alias
 
 
-def get_mini_link_details(alias: str, session: SessionDep) -> MiniLink | None:
-    query = select(MiniLink).where(MiniLink.alias == alias)
+def get_all_mini_links(
+    user_session_id: UserSessionDep, session: SessionDep
+) -> list[MiniLink]:
+    query = select(MiniLink).where(MiniLink.user_session_id == user_session_id)
+    return session.exec(query).all()
+
+
+def get_mini_link_details(
+    alias: str, user_session_id: UserSessionDep, session: SessionDep
+) -> MiniLink | None:
+    query = select(MiniLink).where(
+        MiniLink.alias == alias, MiniLink.user_session_id == user_session_id
+    )
     return session.exec(query).first()
 
 
@@ -24,8 +36,10 @@ def get_redirect_url(alias: str, session: SessionDep) -> str | None:
     return mini_link.url
 
 
-def delete_mini_link(alias: str, session: SessionDep) -> MiniLink | None:
-    mini_link = get_mini_link_details(alias, session)
+def delete_mini_link(
+    alias: str, user_session_id: UserSessionDep, session: SessionDep
+) -> MiniLink | None:
+    mini_link = get_mini_link_details(alias, user_session_id, session)
     if mini_link:
         session.delete(mini_link)
         session.commit()
@@ -52,7 +66,7 @@ def add_alias(mini_link: MiniLinkCreate, session: Session) -> MiniLinkCreate:
 
 
 def add_or_verify(
-    mini_link: MiniLinkCreate, session: SessionDep
+    mini_link: MiniLinkCreate, session: SessionDep,
 ) -> MiniLinkCreate | None:
     if mini_link.alias:
         match_found = bool(find_match(mini_link, session))
@@ -60,13 +74,31 @@ def add_or_verify(
     return add_alias(mini_link, session)
 
 
+def verify_or_add_user_session(
+    user_session_id: UserSessionDep, session: SessionDep
+) -> None:
+    query = select(UserSession).where(UserSession.id == user_session_id)
+    if not session.exec(query).first():
+        user_session_db = UserSession(id=user_session_id)
+        session.add(user_session_db)
+        session.commit()
+        session.refresh(user_session_db)
+    return
+
+
 def add_mini_link(
     mini_link: Annotated[MiniLinkCreate | None, Depends(add_or_verify)],
-    session: SessionDep
+    user_session_id: UserSessionDep,
+    session: SessionDep,
 ) -> MiniLink | None:
     if not mini_link:
         return mini_link
-    db_mini_link = MiniLink.model_validate(mini_link)
+    verify_or_add_user_session(user_session_id, session)
+    db_mini_link = MiniLink.model_validate({
+        'url': mini_link.url,
+        'alias': mini_link.alias,
+        'user_session_id': user_session_id
+    })
     session.add(db_mini_link)
     session.commit()
     session.refresh(db_mini_link)
