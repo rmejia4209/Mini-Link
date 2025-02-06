@@ -36,6 +36,7 @@ def test_mini_link_create_without_alias() -> None:
     res_data = res.json()
     assert generate_alias(1) == res_data['alias']
     assert res.status_code == 200
+    data.append({'url': url, 'alias': generate_alias(1)})
 
 
 @pytest.mark.parametrize(
@@ -45,6 +46,7 @@ def test_case_sensitivity(payload) -> None:
     """Test the case sensitivity of the API."""
     res = client_1.post("/", json=payload)
     assert res.status_code == 200
+    data.append(payload)
 
 
 @pytest.mark.parametrize('alias', [data[i]['alias'] for i in range(len(data))])
@@ -84,6 +86,21 @@ def test_delete_mini_links_on_different_session(alias) -> None:
     """Test deleting on a different session"""
     res = client_2.delete(f'/{alias}')
     assert res.status_code == 404
+
+
+def test_get_all_mini_links() -> None:
+    """Test getting all of the mini links on a session"""
+    res = client_1.get('/get-all')
+    aliases = [item['alias'] for item in res.json()]
+    assert all(payload['alias'] in aliases for payload in data)
+    assert res.status_code == 200
+
+
+def test_get_all_mini_links_on_different_session() -> None:
+    """Test getting all of the mini links on a different session"""
+    res = client_2.get('/get-all')
+    assert not res.json()  # response should be empty
+    assert res.status_code == 200
 
 
 @pytest.mark.parametrize('alias', [data[i]['alias'] for i in range(len(data))])

@@ -8,6 +8,13 @@ from ..dependencies import UserSessionDep
 from ..utils import generate_alias
 
 
+def get_all_mini_links(
+    user_session_id: UserSessionDep, session: SessionDep
+) -> list[MiniLink]:
+    query = select(MiniLink).where(MiniLink.user_session_id == user_session_id)
+    return session.exec(query).all()
+
+
 def get_mini_link_details(
     alias: str, user_session_id: UserSessionDep, session: SessionDep
 ) -> MiniLink | None:

@@ -6,7 +6,8 @@ from fastapi.responses import RedirectResponse, Response
 from .models import MiniLinkPublic
 from .db.models import MiniLink
 from .db.queries import (
-    add_mini_link, get_mini_link_details, get_redirect_url, delete_mini_link
+    add_mini_link, get_all_mini_links, get_mini_link_details, get_redirect_url,
+    delete_mini_link
 )
 
 origins = ['http://localhost:5173']
@@ -33,8 +34,15 @@ def minify_url(
     return mini_link
 
 
+@app.get('/get-all', response_model=list[MiniLinkPublic])
+def api_get_all_mini_links(
+    mini_links: Annotated[list[MiniLink], Depends(get_all_mini_links)]
+) -> Any:
+    return mini_links
+
+
 @app.get('/get-info/{alias}', response_model=MiniLinkPublic)
-def get_mini_link_details(
+def api_get_mini_link_details(
     mini_link: Annotated[MiniLink, Depends(get_mini_link_details)]
 ) -> Any:
     if not mini_link:
