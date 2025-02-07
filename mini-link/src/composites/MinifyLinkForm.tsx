@@ -2,14 +2,16 @@ import { MiniLinkType } from "../types/common";
 import useObject from "../hooks/useObject";
 import LinkInput from "../components/LinkInput";
 import AliasInput from "../components/AliasInput";
+import ServerStatus from "../components/ServerStatus";
 import MinifyLinkButton from "../components/MinifyLinkButton";
 import { createMiniLink } from "../api/createMiniLink";
 
 interface FormActionTypes {
   appendMiniLink: (miniLink: MiniLinkType) => void;
+  status: string;
 }
 
-function MinifyLinkForm({ appendMiniLink }: FormActionTypes) {
+function MinifyLinkForm({ appendMiniLink, status }: FormActionTypes) {
 
   const [linkDetails, setLinkDetails] = useObject({url: '', alias: ''});
 
@@ -45,8 +47,10 @@ function MinifyLinkForm({ appendMiniLink }: FormActionTypes) {
             <MinifyLinkButton
               onClick={handleFetch}
             />
+            <ServerStatus status={status}/>
           </div>
         </div>
+        
       </div>
     </div>
 
