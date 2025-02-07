@@ -34,6 +34,11 @@ def minify_url(
     return mini_link
 
 
+@app.get('/status',  status_code=204, response_class=Response)
+def check_status() -> None:
+    return
+
+
 @app.get('/get-all', response_model=list[MiniLinkPublic])
 def api_get_all_mini_links(
     mini_links: Annotated[list[MiniLinkPublic], Depends(get_all_mini_links)]

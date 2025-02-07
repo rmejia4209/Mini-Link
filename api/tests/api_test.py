@@ -10,6 +10,11 @@ url = 'https://google.com'
 data = [{'url': url, 'alias': generate_alias(i)} for i in range(2, 7)]
 
 
+def test_is_on() -> None:
+    res = client_1.get('/status')
+    assert res.status_code == 204
+
+
 @pytest.mark.parametrize('payload', data)
 def test_mini_link_create_with_alias(payload) -> None:
     """Test 5 create operations with alias specified"""
