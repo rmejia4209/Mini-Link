@@ -3,7 +3,7 @@ import useObject from "../hooks/useObject";
 import LinkInput from "../components/LinkInput";
 import AliasInput from "../components/AliasInput";
 import MinifyLinkButton from "../components/MinifyLinkButton";
-import { createMiniLink } from "../api/apiServices";
+import { createMiniLink } from "../api/createMiniLink";
 
 interface FormActionTypes {
   appendMiniLink: (miniLink: MiniLinkType) => void;

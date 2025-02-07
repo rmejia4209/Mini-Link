@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { getAllMiniLinks } from "./api/getMiniLinks";
+import { useState, useEffect } from "react";
 import { MiniLinkType } from "./types/common";
 import Logo from "./components/Logo";
 import MinifyLinkForm from "./composites/MinifyLinkForm";
@@ -9,11 +10,21 @@ function App() {
 
   const [miniLinks, setMiniLinks] = useState<MiniLinkType[]>([]);
 
-  // get all mini links here
-
   const appendMiniLink = (newLink: MiniLinkType) => {
     setMiniLinks([newLink, ...miniLinks])
   }
+
+  useEffect(() => {
+    const initLinks = async () => {
+      try {
+        const [_, miniLinks] = await getAllMiniLinks();
+        setMiniLinks(miniLinks);
+      } catch(err) {
+        alert(err);
+      }
+    }
+    initLinks();
+  }, [])
 
   return (
     <>

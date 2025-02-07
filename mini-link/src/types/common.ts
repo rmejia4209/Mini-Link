@@ -1,9 +1,16 @@
 
 
 export interface MiniLinkType {
-    alias: string;
     url: string;
+    alias: string;
     expiration: string;
-    visits: number;
+    totalVisits: number;
+    currentMonthVisits: number;
+    lastMonthVisits: number;
+}
+
+
+export interface UnsuccessfulAPIResponseType {
+    detail: string
 }
 
