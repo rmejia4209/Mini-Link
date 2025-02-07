@@ -1,4 +1,5 @@
 import { getAllMiniLinks } from "./api/getMiniLinks";
+import getStatus from "./api/getStatus";
 import { useState, useEffect } from "react";
 import { MiniLinkType } from "./types/common";
 import Logo from "./components/Logo";
@@ -9,6 +10,7 @@ import MiniLinkCards from "./composites/MiniLinkCards";
 function App() {
 
   const [miniLinks, setMiniLinks] = useState<MiniLinkType[]>([]);
+  const [status, setStatus] = useState('');
 
   const appendMiniLink = (newLink: MiniLinkType) => {
     setMiniLinks([newLink, ...miniLinks])
@@ -17,12 +19,17 @@ function App() {
   useEffect(() => {
     const initLinks = async () => {
       try {
-        const miniLinks = await getAllMiniLinks();
-        setMiniLinks(miniLinks);
+        const serverStatus = await getStatus()
+        setStatus(serverStatus);
+        if (serverStatus == 'OK') {
+          const miniLinks = await getAllMiniLinks();
+          setMiniLinks(miniLinks);
+        }
       } catch(err) {
         alert(err);
       }
     }
+
     initLinks();
   }, [])
 
@@ -30,7 +37,7 @@ function App() {
     <>
       <div className="">
         <Logo/>
-        <MinifyLinkForm appendMiniLink={appendMiniLink}/>
+        <MinifyLinkForm appendMiniLink={appendMiniLink} status={status}/>
         <MiniLinkCards miniLinks={miniLinks}/>
       </div>
     </>
