@@ -36,14 +36,14 @@ def minify_url(
 
 @app.get('/get-all', response_model=list[MiniLinkPublic])
 def api_get_all_mini_links(
-    mini_links: Annotated[list[MiniLink], Depends(get_all_mini_links)]
+    mini_links: Annotated[list[MiniLinkPublic], Depends(get_all_mini_links)]
 ) -> Any:
     return mini_links
 
 
 @app.get('/get-info/{alias}', response_model=MiniLinkPublic)
 def api_get_mini_link_details(
-    mini_link: Annotated[MiniLink, Depends(get_mini_link_details)]
+    mini_link: Annotated[MiniLinkPublic | None, Depends(get_mini_link_details)]
 ) -> Any:
     if not mini_link:
         raise HTTPException(status_code=404, detail='Mini Link Not Found')

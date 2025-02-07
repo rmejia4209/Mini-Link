@@ -68,7 +68,7 @@ def test_get_mini_link_info(alias) -> None:
     """Test the details returned by the get-info alias"""
     res = client_1.get(f'/get-info/{alias}')
     info = res.json()
-    assert info['visits'] == 1
+    assert info['total_visits'] == 1
 
 
 @pytest.mark.parametrize('alias', [data[i]['alias'] for i in range(len(data))])

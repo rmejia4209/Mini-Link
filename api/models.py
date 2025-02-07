@@ -22,4 +22,6 @@ class MiniLinkPublic(BaseModel):
     url: str
     alias: str
     expiration: datetime
-    visits: int
+    total_visits: int = Field(default=0)
+    current_month_visits: int = Field(default=0)
+    last_month_visits: int = Field(default=0)
