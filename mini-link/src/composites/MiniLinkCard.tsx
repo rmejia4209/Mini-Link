@@ -3,21 +3,21 @@ import DeleteIcon from "../icons/DeleteIcon";
 import MiniLinkVisits from "../components/MiniLinkVisits";
 import MiniLinkURL from "../components/MiniLinkURL";
 
-const baseUrl = import.meta.env.VITE_API_URL;
-
 
 function MiniLinkCard({ miniLink }: { miniLink: MiniLinkType }): JSX.Element {
     return (
       <div className="card card-compact w-fit bg-neutral-content shadow-xl rounded-3xl">
-      <div className="card-body">
-        <div className="flex flex-row justify-between items-center">
-          <MiniLinkURL miniLink={`${baseUrl}${miniLink.alias}`}/>
+      <div className="card-body items-center gap-0">
+        <div className="flex flex-row justify-between items-center gap-2">
+          <MiniLinkURL alias={`${miniLink.alias}`}/>
           <button className="btn btn-xs btn-circle btn-error shadow-none">
             <DeleteIcon />
           </button>
         </div>
         <MiniLinkVisits
-          visits={miniLink.visits}
+          totalVisits={miniLink.totalVisits}
+          currentMonthVisits={miniLink.currentMonthVisits}
+          lastMonthVisits={miniLink.lastMonthVisits}
         />
       </div>
     </div>

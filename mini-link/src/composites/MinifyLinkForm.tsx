@@ -3,7 +3,7 @@ import useObject from "../hooks/useObject";
 import LinkInput from "../components/LinkInput";
 import AliasInput from "../components/AliasInput";
 import MinifyLinkButton from "../components/MinifyLinkButton";
-import { createMiniLink } from "../api/apiServices";
+import { createMiniLink } from "../api/createMiniLink";
 
 interface FormActionTypes {
   appendMiniLink: (miniLink: MiniLinkType) => void;
@@ -15,12 +15,10 @@ function MinifyLinkForm({ appendMiniLink }: FormActionTypes) {
 
   const handleFetch = async () => {
     try {
-      const [status, data] = await createMiniLink(
+      const miniLinkDetails = await createMiniLink(
         { url: linkDetails.url, alias: linkDetails.alias }
       );
-      if (status == 409) alert('TODO: alias red');
-      else if (status == 422) alert('TODO: invalid input(s)');
-      else appendMiniLink(data as MiniLinkType);
+      appendMiniLink(miniLinkDetails);
     } catch (error) {
       alert(error);
     }
