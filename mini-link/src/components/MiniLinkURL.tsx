@@ -1,7 +1,6 @@
 import { useState } from "react";
 import CopyIcon from "../icons/CopyIcon";
 
-const baseUrl = import.meta.env.VITE_API_URL;
 
 interface MiniLinkURLPropTypes {
   alias: string;
