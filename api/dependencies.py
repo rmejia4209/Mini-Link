@@ -7,7 +7,8 @@ def get_user_session(req: Request, res: Response) -> str:
     session_id = req.cookies.get("session_id")
     if not session_id:
         session_id = str(uuid4())
-        res.set_cookie("session_id", session_id)
+        # TODO: Band aid solution - make the expiration rolling
+        res.set_cookie("session_id", session_id, max_age=(60*60*24*365*10))
     return session_id
 
 

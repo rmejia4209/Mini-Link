@@ -2,12 +2,11 @@ CREATE DATABASE IF NOT EXISTS mini_link_db;
 
 USE mini_link_db;
 
-/*
- * Delete tables if they exist.
- */
+-- Delete tables if they exist.
 SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS user_sessions;
 DROP TABLE IF EXISTS mini_links;
+DROP TABLE IF EXISTS mini_link_visits;
 DROP EVENT IF EXISTS delete_expired_links;
 SET FOREIGN_KEY_CHECKS = 1;
 
@@ -22,9 +21,16 @@ CREATE TABLE mini_links (
     url VARCHAR(1024) NOT NULL,
     alias VARCHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL UNIQUE,
     expiration DATETIME NOT NULL,
-    visits INT NOT NULL DEFAULT 0,
     user_session_id VARCHAR(255),
     FOREIGN KEY (user_session_id) REFERENCES user_sessions(id)
+);
+
+-- Create visits table
+CREATE TABLE mini_link_visits (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    visit_date DATETIME NOT NULL,
+    mini_link_id INT,
+    FOREIGN KEY (mini_link_id) REFERENCES mini_links(id)
 );
 
 -- Create event to automatically delete expired mini links
