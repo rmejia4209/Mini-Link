@@ -17,7 +17,7 @@ function App() {
   useEffect(() => {
     const initLinks = async () => {
       try {
-        const [_, miniLinks] = await getAllMiniLinks();
+        const miniLinks = await getAllMiniLinks();
         setMiniLinks(miniLinks);
       } catch(err) {
         alert(err);

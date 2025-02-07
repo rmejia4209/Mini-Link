@@ -15,12 +15,10 @@ function MinifyLinkForm({ appendMiniLink }: FormActionTypes) {
 
   const handleFetch = async () => {
     try {
-      const [status, data] = await createMiniLink(
+      const miniLinkDetails = await createMiniLink(
         { url: linkDetails.url, alias: linkDetails.alias }
       );
-      if (status == 409) alert('TODO: alias red');
-      else if (status == 422) alert('TODO: invalid input(s)');
-      else appendMiniLink(data as MiniLinkType);
+      appendMiniLink(miniLinkDetails);
     } catch (error) {
       alert(error);
     }

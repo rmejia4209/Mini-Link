@@ -1,28 +1,30 @@
 import { useState } from "react";
 import CopyIcon from "../icons/CopyIcon";
 
+const baseUrl = import.meta.env.VITE_API_URL;
+
 interface MiniLinkURLPropTypes {
-  miniLink: string;
-  isNew?: boolean;
+  alias: string;
 }
 
-function MiniLinkURL({ miniLink, isNew }: MiniLinkURLPropTypes): JSX.Element {
+function MiniLinkURL({ alias }: MiniLinkURLPropTypes): JSX.Element {
 
   const [isHovering, setIsHovering] = useState(true);
 
   return (
     <>
     <button
-      className="group border-transparent border-2 rounded-xl hover:border-info"
+      className={`
+        flex flex-row items-center group border-transparent border-2 rounded-xl hover:border-info
+      `}
       onMouseEnter={()=>setIsHovering(!isHovering)}
       onMouseLeave={()=>setIsHovering(!isHovering)}
     >
+      <CopyIcon isHidden={isHovering} />
       <h2 className="card-title m-1 text-secondary-content group-hover:text-info">
-        {miniLink}
-        <CopyIcon isHidden={isHovering} />
+        {`minilink.com/${alias}`}  
       </h2>
     </button>
-    {isNew ? <div className="badge badge-secondary">NEW</div> : null}
     </>
     
     

@@ -1,4 +1,6 @@
-
+import { MiniLinkTypeFromAPI, MiniLinkType } from "../types/common";
+import { convertToMiniLinkType } from "../types/common";
+import { UnsuccessfulAPIResponseType } from "../types/common";
 const baseURL = import.meta.env.VITE_API_URL;
 
 interface UserInputType {
@@ -7,27 +9,13 @@ interface UserInputType {
 }
 
 
-interface SuccessfulResponseType {
-  url: string;
-  alias: string;
-  expiration: string
-  visits: number
-}
-
-interface UnsuccessfulResponseType {
-  detail: string
-}
-
-type ApiResponseType = SuccessfulResponseType | UnsuccessfulResponseType;
-
-
 /**
  * Makes a request to the api to create a mini-link. 
  * 
  * @param userInput - Contains the url to be shorten and an optional alias
  */
 export const createMiniLink = async (
-  userInput: UserInputType): Promise<[number, ApiResponseType]> => 
+  userInput: UserInputType): Promise<MiniLinkType> => 
 {
   const payload = Object.fromEntries(
     Object.entries(userInput).filter(([_, v]) => v !== "")
@@ -39,8 +27,13 @@ export const createMiniLink = async (
       credentials: 'include',
       body: JSON.stringify(payload)
     });
-    const data: ApiResponseType = await res.json();
-    return [res.status, data];
+    if (res.status == 200) {
+      const data: MiniLinkTypeFromAPI = await res.json();
+      return convertToMiniLinkType(data);
+    } else {
+      const data: UnsuccessfulAPIResponseType = await res.json();
+      throw new Error(`${data.detail}`);
+    }
   } catch (error) {
     throw new Error(`${error}`);
   }  

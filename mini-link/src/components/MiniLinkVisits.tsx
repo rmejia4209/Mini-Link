@@ -1,29 +1,32 @@
 
 
 interface MiniLinkVisitsPropTypes {
-  visits: number;
-  currentMonthClicks?: number,
-  lastMonthClicks?: number
+  totalVisits: number;
+  currentMonthVisits: number;
+  lastMonthVisits: number;
 }
 
 
 function MiniLinkVisits(
-  { visits, currentMonthClicks=100, lastMonthClicks=100 }: MiniLinkVisitsPropTypes
+  { totalVisits, currentMonthVisits, lastMonthVisits }: MiniLinkVisitsPropTypes
 ): JSX.Element {
 
   const generateDescription = () => {
+
+    if (lastMonthVisits == 0) return "";
+    console.log(lastMonthVisits)
     const percentDiff = Math.floor(
-      100 * (currentMonthClicks - lastMonthClicks) / lastMonthClicks
+      100 * (currentMonthVisits - lastMonthVisits) / lastMonthVisits
     );
+    const arrow = percentDiff < 0 ? '↘︎' : '↗︎';
     const direction = percentDiff < 0 ? 'less' : 'more';
-    console.log(percentDiff)
-    return `${Math.abs(percentDiff)}% ${direction} than last month`
+    return `${arrow} ${Math.abs(percentDiff)}% ${direction} than last month`
   }
 
   return (
-    <div className="stat max-w-fit">
-      <div className="stat-title">Monthly Clicks</div>
-      <div className="stat-value">{visits}</div>
+    <div className="stat place-items-center max-w-fit">
+      <div className="stat-title">Total visits</div>
+      <div className="stat-value">{totalVisits}</div>
       <div className="stat-desc">{generateDescription()}</div>
       <button className="btn btn-sm btn-outline btn-accent mt-2">Details</button>
     </div>
