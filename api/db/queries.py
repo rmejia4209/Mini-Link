@@ -6,7 +6,7 @@ from .config import SessionDep
 from ..models import MiniLinkCreate, MiniLinkPublic
 from .models import MiniLink, UserSession, MiniLinkVisits
 from ..dependencies import UserSessionDep
-from ..utils import generate_alias
+from ..utils import generate_alias, generate_multiple_random_datetimes
 
 
 def get_visits_in_time_frame(
@@ -121,7 +121,7 @@ def add_alias(mini_link: MiniLinkCreate, session: Session) -> MiniLinkCreate:
     return mini_link
 
 
-def add_or_verify(
+def add_or_verify_alias(
     mini_link: MiniLinkCreate, session: SessionDep,
 ) -> MiniLinkCreate | None:
     if mini_link.alias:
@@ -143,7 +143,7 @@ def verify_or_add_user_session(
 
 
 def add_mini_link(
-    mini_link: Annotated[MiniLinkCreate | None, Depends(add_or_verify)],
+    mini_link: Annotated[MiniLinkCreate | None, Depends(add_or_verify_alias)],
     user_session_id: UserSessionDep,
     session: SessionDep,
 ) -> MiniLink | None:
@@ -159,3 +159,35 @@ def add_mini_link(
     session.commit()
     session.refresh(db_mini_link)
     return db_mini_link
+
+
+def add_random_visits(mini_link_id: int, session: SessionDep) -> None:
+    rand_dates = generate_multiple_random_datetimes(100, 300)
+    visits = []
+    for rand_date in rand_dates:
+        visits.append(
+            MiniLinkVisits(visit_date=rand_date, mini_link_id=mini_link_id)
+        )
+    session.add_all(visits)
+    session.commit()
+    return
+
+
+def add_demo_data(
+    user_session_id: UserSessionDep, session: SessionDep
+) -> list[MiniLinkPublic]:
+    demo_data = [
+        {'url': 'https://github.com/rmejia4209/Mini-Link'},
+        {'url': 'https://www.linkedin.com/in/rigoberto-mejia/'},
+        {'url': 'https://www.solesense.com/en/'}
+    ]
+    response_data = []
+    for item in demo_data:
+        db_mini_link = add_mini_link(
+            add_or_verify_alias(MiniLinkCreate(**item), session),
+            user_session_id,
+            session
+        )
+        add_random_visits(db_mini_link.id, session)
+        response_data.append(aggregate_stats(db_mini_link, session))
+    return response_data

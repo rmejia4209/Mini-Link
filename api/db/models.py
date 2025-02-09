@@ -23,4 +23,4 @@ class MiniLinkVisits(SQLModel, table=True):
     __tablename__ = 'mini_link_visits'
     id: int = Field(default=None, primary_key=True)
     visit_date: datetime = Field(default=datetime.utcnow())
-    mini_link_id: int = Field(foreign_key='mini_links.id')
+    mini_link_id: int = Field(foreign_key='mini_links.id', nullable=False)
