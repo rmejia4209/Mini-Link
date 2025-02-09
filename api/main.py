@@ -7,7 +7,7 @@ from .models import MiniLinkPublic
 from .db.models import MiniLink
 from .db.queries import (
     add_mini_link, get_all_mini_links, get_mini_link_details, get_redirect_url,
-    delete_mini_link
+    delete_mini_link, add_demo_data
 )
 
 origins = ['http://localhost:5173']
@@ -42,6 +42,13 @@ def check_status() -> None:
 @app.get('/get-all', response_model=list[MiniLinkPublic])
 def api_get_all_mini_links(
     mini_links: Annotated[list[MiniLinkPublic], Depends(get_all_mini_links)]
+) -> Any:
+    return mini_links
+
+
+@app.get('/get-demo-data', response_model=list[MiniLinkPublic])
+def load_demo_data(
+    mini_links: Annotated[list[MiniLinkPublic], Depends(add_demo_data)]
 ) -> Any:
     return mini_links
 

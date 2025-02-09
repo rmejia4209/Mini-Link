@@ -29,7 +29,7 @@ CREATE TABLE mini_links (
 CREATE TABLE mini_link_visits (
     id INT PRIMARY KEY AUTO_INCREMENT,
     visit_date DATETIME NOT NULL,
-    mini_link_id INT,
+    mini_link_id INT NOT NULL,
     FOREIGN KEY (mini_link_id) REFERENCES mini_links(id)
 );
 

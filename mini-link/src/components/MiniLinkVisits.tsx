@@ -14,7 +14,6 @@ function MiniLinkVisits(
   const generateDescription = () => {
 
     if (lastMonthVisits == 0) return "";
-    console.log(lastMonthVisits)
     const percentDiff = Math.floor(
       100 * (currentMonthVisits - lastMonthVisits) / lastMonthVisits
     );
