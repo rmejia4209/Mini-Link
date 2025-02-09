@@ -4,9 +4,9 @@ import { convertToMiniLinkType } from "../types/common";
 const baseURL = import.meta.env.VITE_API_URL;
 
 
-export const getAllMiniLinks = async (): Promise<MiniLinkType[]> => {
+const getDemoData = async (): Promise<MiniLinkType[]> => {
   try {
-    const res = await fetch(`${baseURL}/get-all`, {
+    const res = await fetch(`${baseURL}/get-demo-data`, {
       method: "GET",
       headers: {'Content-Type': 'application/json'},
       credentials: 'include',
@@ -20,3 +20,5 @@ export const getAllMiniLinks = async (): Promise<MiniLinkType[]> => {
     throw new Error(`${error}`);
   }  
 }
+
+export default getDemoData;

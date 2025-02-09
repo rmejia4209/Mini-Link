@@ -21,7 +21,7 @@ export const createMiniLink = async (
     Object.entries(userInput).filter(([_, v]) => v !== "")
   );
   try {
-    const res = await fetch(baseURL, {
+    const res = await fetch(`${baseURL}/`, {
       method: "POST",
       headers: {'Content-Type': 'application/json'},
       credentials: 'include',

@@ -13,7 +13,7 @@ function App() {
   const hasRun = useRef(false);
 
   const appendMiniLink = (newLink: MiniLinkType) => {
-    setMiniLinks([newLink, ...miniLinks])
+    setMiniLinks(prevMiniLinks => [newLink, ...prevMiniLinks])
   }
 
   useEffect(() => {
@@ -37,7 +37,7 @@ function App() {
   return (
     <>
       <div className="flex flex-col min-h-screen">
-        <Navbar/>
+        <Navbar appendMiniLink={appendMiniLink}/>
         <main className="flex-1 pb-10">
           <MinifyLinkForm appendMiniLink={appendMiniLink} status={status}/>
           <MiniLinkCards miniLinks={miniLinks}/>
