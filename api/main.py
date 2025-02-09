@@ -50,7 +50,6 @@ def api_get_all_mini_links(
 def load_demo_data(
     mini_links: Annotated[list[MiniLinkPublic], Depends(add_demo_data)]
 ) -> Any:
-    print(mini_links)
     return mini_links
 
 
