@@ -1,17 +1,13 @@
 
 
-interface CopyIconPropTypes {
-  isHidden?: boolean;
-}
-
-
-function CopyIcon({ isHidden=false }: CopyIconPropTypes): JSX.Element {
+function CopyIcon(): JSX.Element {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
-      className={`size-6 stroke-2 ${isHidden ? 'stroke-transparent': 'stroke-info'}`}
+      stroke="currentColor"
+      className='size-6 stroke-2'
     >
       <path
         strokeLinecap="round"

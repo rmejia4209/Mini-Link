@@ -23,7 +23,7 @@ function MiniLinkVisits(
   }
 
   return (
-    <div className="stat place-items-center max-w-fit">
+    <div className="stat place-items-center max-w-fit p-0">
       <div className="stat-title">Total visits</div>
       <div className="stat-value">{totalVisits}</div>
       <div className="stat-desc">{generateDescription()}</div>

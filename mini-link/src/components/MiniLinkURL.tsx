@@ -1,5 +1,5 @@
-import { useState } from "react";
-import CopyIcon from "../icons/CopyIcon";
+import CopyLinkButton from "./CopyLinkButton";
+import FollowLinkButton from "./FollowLinkButton";
 
 
 interface MiniLinkURLPropTypes {
@@ -8,25 +8,22 @@ interface MiniLinkURLPropTypes {
 
 function MiniLinkURL({ alias }: MiniLinkURLPropTypes): JSX.Element {
 
-  const [isHovering, setIsHovering] = useState(true);
+  
 
   return (
     <>
-    <button
-      className={`
-        flex flex-row items-center group border-transparent border-2 rounded-xl hover:border-info
-      `}
-      onMouseEnter={()=>setIsHovering(!isHovering)}
-      onMouseLeave={()=>setIsHovering(!isHovering)}
-    >
-      <CopyIcon isHidden={isHovering} />
-      <h2 className="card-title m-1 text-secondary-content group-hover:text-info">
-        {`minilink.com/${alias}`}  
-      </h2>
-    </button>
+      <div className="relative group w-[175px] h-[45px]">
+        <div className="absolute inset-0 flex items-center justify-center group-hover:hidden">
+          <h1 className="card-title m-1 text-secondary-content text-4xl">
+            {`${alias}`}
+          </h1>
+        </div>
+        <div className="absolute inset-0 hidden items-center justify-center gap-1 group-hover:flex">
+          <CopyLinkButton/>
+          <FollowLinkButton/>
+        </div>
+      </div>
     </>
-    
-    
   )
 }
 
