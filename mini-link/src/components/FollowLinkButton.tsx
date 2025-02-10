@@ -1,10 +1,16 @@
+import BaseButton from "./base/BaseButton";
 import FollowIcon from "../icons/FollowIcon";
 
 function FollowLinkButton(): JSX.Element {
   return (
-    <button className="btn btn-sm btn-accent btn-outline rounded-xl">
-      <FollowIcon/>Go
-    </button>
+    <BaseButton
+      className="btn-sm btn-accent btn-outline"
+      text="Go"
+      onClick={()=>{console.log('clicked')}}
+      Icon={FollowIcon}
+    />
   )
 }
+
+
 export default FollowLinkButton;

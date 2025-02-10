@@ -1,10 +1,17 @@
+import BaseButton from "./base/BaseButton";
 import CopyIcon from "../icons/CopyIcon";
 
+
 function CopyLinkButton(): JSX.Element {
+
+  
   return (
-    <button className="btn btn-sm btn-primary btn-outline rounded-xl">
-      <CopyIcon />Copy
-    </button>
+    <BaseButton
+      className="btn-sm btn-primary btn-outline"
+      text="Copy"
+      onClick={()=>{console.log('clicked')}}
+      Icon={CopyIcon}
+    />
   )
 }
 
