@@ -1,5 +1,4 @@
 import { MiniLinkType } from "../types/common";
-import DeleteIcon from "../icons/DeleteIcon";
 import MiniLinkVisits from "../components/MiniLinkVisits";
 import MiniLinkURL from "../components/MiniLinkURL";
 

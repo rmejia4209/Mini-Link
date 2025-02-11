@@ -16,8 +16,8 @@ function MiniLinkURL({ alias }: MiniLinkURLPropTypes): JSX.Element {
           </h1>
         </div>
         <div className="absolute inset-0 hidden items-center justify-center gap-1 z-[1] group-hover:flex">
-          <CopyLinkButton/>
-          <FollowLinkButton/>
+          <CopyLinkButton alias={alias}/>
+          <FollowLinkButton alias={alias}/>
         </div>
       </div>      
     </>
