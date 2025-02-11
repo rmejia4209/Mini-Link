@@ -2,13 +2,13 @@ import React from "react";
 
 
 interface BaseButtonPropTypes {
-    text?: string;
-    onClick: () => void;
     className?: string;
     Icon?: React.ComponentType;
+    text?: string;
+    onClick?: () => void;
 }
 
-function BaseButton({ className='', onClick, text, Icon }: BaseButtonPropTypes): JSX.Element {
+function BaseButton({ className='', Icon, text, onClick }: BaseButtonPropTypes): JSX.Element {
   return (
     <button className={`btn rounded-xl ${className}`} onClick={onClick}>
       {Icon ? <Icon/> : null}

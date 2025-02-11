@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from typing import Annotated
 from fastapi import Depends
-from sqlmodel import Session, select, desc, func
+from sqlmodel import Session, select, desc, func, delete
 from .config import SessionDep
 from ..models import MiniLinkCreate, MiniLinkPublic
 from .models import MiniLink, UserSession, MiniLinkVisits
@@ -97,6 +97,12 @@ def delete_mini_link(
 ) -> MiniLink | None:
     mini_link = get_mini_link(alias, user_session_id, session)
     if mini_link:
+        session.exec(
+            delete(MiniLinkVisits).where(
+                MiniLinkVisits.mini_link_id == mini_link.id
+            )
+        )
+        
         session.delete(mini_link)
         session.commit()
     return mini_link

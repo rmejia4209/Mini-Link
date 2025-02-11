@@ -5,11 +5,15 @@ interface MiniLinkVisitsPropTypes {
   totalVisits: number;
   currentMonthVisits: number;
   lastMonthVisits: number;
+  alias: string;
+  removeMiniLink: (alias: string) => Promise<void>;
 }
 
 
 function MiniLinkVisits(
-  { totalVisits, currentMonthVisits, lastMonthVisits }: MiniLinkVisitsPropTypes
+  {
+    totalVisits, currentMonthVisits, lastMonthVisits, alias, removeMiniLink
+  }: MiniLinkVisitsPropTypes
 ): JSX.Element {
 
   const generateDescription = () => {
@@ -30,7 +34,7 @@ function MiniLinkVisits(
       <div className="stat-desc">{generateDescription()}</div>
       <div className="flex flex-row gap-4 items-center justify-center">
         <DetailsButton/>
-        <DeleteButton/>
+        <DeleteButton alias={alias} removeMiniLink={removeMiniLink}/>
       </div>
     </div>
 

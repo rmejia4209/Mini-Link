@@ -5,6 +5,7 @@ import MinifyLinkForm from "./composites/MinifyLinkForm";
 import MiniLinkCards from "./composites/MiniLinkCards";
 import { getAllMiniLinks } from "./api/getMiniLinks";
 import getStatus from "./api/getStatus";
+import deleteMiniLink from "./api/deleteMiniLink";
 
 function App() {
 
@@ -12,8 +13,18 @@ function App() {
   const [status, setStatus] = useState('');
   const hasRun = useRef(false);
 
-  const appendMiniLink = (newLink: MiniLinkType) => {
+  const appendMiniLink = (newLink: MiniLinkType): void => {
     setMiniLinks(prevMiniLinks => [newLink, ...prevMiniLinks])
+  }
+
+  const removeMiniLink = async (alias: string): Promise<void> => {
+    const newMiniLinks = miniLinks.filter(miniLink => miniLink.alias != alias);
+    try {
+      await deleteMiniLink(alias);
+      setMiniLinks(newMiniLinks);
+    } catch(err) {
+      console.error(err);
+    }
   }
 
   useEffect(() => {
@@ -40,7 +51,10 @@ function App() {
         <Navbar appendMiniLink={appendMiniLink}/>
         <main className="flex-1 pb-10">
           <MinifyLinkForm appendMiniLink={appendMiniLink} status={status}/>
-          <MiniLinkCards miniLinks={miniLinks}/>
+          <MiniLinkCards
+            miniLinks={miniLinks}
+            removeMiniLink={removeMiniLink}
+          />
         </main>
       <footer className="footer footer-center bg-base-300 text-base-content p-4">
         <aside>

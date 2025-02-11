@@ -3,14 +3,19 @@ import MiniLinkCard from "./MiniLinkCard";
 
 
 function MiniLinkCards(
-  { miniLinks }: { miniLinks: MiniLinkType[] }): JSX.Element
+    { miniLinks, removeMiniLink }:
+    {
+      miniLinks: MiniLinkType[],
+      removeMiniLink:(alias: string) => Promise<void>;
+    }
+  ): JSX.Element
 {
 
   return(
     <div className="flex flex-col items-center w-screen">
       <div className="max-w-fit">
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {miniLinks.map((link, i) => <MiniLinkCard key={i} miniLink={link}/>)}
+          {miniLinks.map((link, i) => <MiniLinkCard key={i} miniLink={link} removeMiniLink={removeMiniLink}/>)}
         </div>
       </div>
     </div>  
