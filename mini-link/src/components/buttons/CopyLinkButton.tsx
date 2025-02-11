@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import BaseButton from "./base/BaseButton";
-import CopyIcon from "../icons/CopyIcon";
-import CopiedIcon from "../icons/CopiedIcon";
+import BaseButton from "../base/BaseButton";
+import CopyIcon from "../../icons/CopyIcon";
+import CopiedIcon from "../../icons/CopiedIcon";
 
 function CopyLinkButton( { alias }: { alias: string} ): JSX.Element {
 

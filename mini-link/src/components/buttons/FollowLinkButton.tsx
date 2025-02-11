@@ -1,5 +1,5 @@
-import BaseButton from "./base/BaseButton";
-import FollowIcon from "../icons/FollowIcon";
+import BaseButton from "../base/BaseButton";
+import FollowIcon from "../../icons/FollowIcon";
 
 
 function FollowLinkButton( { alias }: { alias: string} ): JSX.Element {

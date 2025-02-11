@@ -2,7 +2,7 @@ import React from "react";
 
 
 interface BaseButtonPropTypes {
-    text: string;
+    text?: string;
     onClick: () => void;
     className?: string;
     Icon?: React.ComponentType;

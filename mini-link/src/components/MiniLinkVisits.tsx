@@ -1,4 +1,5 @@
-
+import DetailsButton from "./buttons/DetailsButton";
+import DeleteButton from "./buttons/DeleteButton";
 
 interface MiniLinkVisitsPropTypes {
   totalVisits: number;
@@ -27,7 +28,10 @@ function MiniLinkVisits(
       <div className="stat-title">Total visits</div>
       <div className="stat-value">{totalVisits}</div>
       <div className="stat-desc">{generateDescription()}</div>
-      <button className="btn btn-sm btn-outline btn-accent mt-2">Details</button>
+      <div className="flex flex-row gap-4 items-center justify-center">
+        <DetailsButton/>
+        <DeleteButton/>
+      </div>
     </div>
 
   )

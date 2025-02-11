@@ -1,5 +1,5 @@
-import CopyLinkButton from "./CopyLinkButton";
-import FollowLinkButton from "./FollowLinkButton";
+import CopyLinkButton from "./buttons/CopyLinkButton";
+import FollowLinkButton from "./buttons/FollowLinkButton";
 
 interface MiniLinkURLPropTypes {
   alias: string;
