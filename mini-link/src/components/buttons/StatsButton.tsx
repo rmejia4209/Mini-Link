@@ -1,11 +1,9 @@
 import BaseButton from "../base/BaseButton";
-import InfoIcon from "../../icons/InfoIcon";
-import QRCodeWrapper from "../QRWrapper";
+import BarGraphIcon from "../../icons/BarGraphIcon";
+import XButton from "./XButton";
 import LineGraph from "../LineGraph";
 
-function DetailsButton({ alias }: { alias: string}): JSX.Element {
-
-  const url = `${import.meta.env.VITE_API_URL}/${alias}`
+function StatsButton(): JSX.Element {
 
   const showDetails = () => {
     const modalId = 'mini_link_details';
@@ -18,19 +16,14 @@ function DetailsButton({ alias }: { alias: string}): JSX.Element {
       <BaseButton
         className="btn-sm btn-info btn-outline"
         onClick={showDetails}
-        Icon={InfoIcon}
+        Icon={BarGraphIcon}
       />
       <dialog id="mini_link_details" className="modal modal-bottom sm:modal-middle ">
       <div className="modal-box p-2">
         <LineGraph />
         <div className="modal-action">
           <form method="dialog">
-            <button
-              className={`
-                btn btn-sm btn-circle btn-ghost absolute right-2 top-2
-              `}>
-                X
-              </button>
+            <XButton/>
           </form>
         </div>
       </div>
@@ -39,4 +32,4 @@ function DetailsButton({ alias }: { alias: string}): JSX.Element {
   )
 }
 
-export default DetailsButton
+export default StatsButton
