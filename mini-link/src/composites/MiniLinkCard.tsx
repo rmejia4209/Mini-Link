@@ -1,7 +1,8 @@
 import { MiniLinkType } from "../types/common";
 import MiniLinkVisits from "../components/MiniLinkVisits";
 import MiniLinkURL from "../components/MiniLinkURL";
-
+import StatsButton from "../components/buttons/StatsButton";
+import DeleteButton from "../components/buttons/DeleteButton";
 
 function MiniLinkCard(
     { miniLink, removeMiniLink }:
@@ -16,9 +17,11 @@ function MiniLinkCard(
           totalVisits={miniLink.totalVisits}
           currentMonthVisits={miniLink.currentMonthVisits}
           lastMonthVisits={miniLink.lastMonthVisits}
-          alias={miniLink.alias}
-          removeMiniLink={removeMiniLink}
         />
+        <div className="flex flex-row gap-4 items-center justify-center">
+          <StatsButton/>
+          <DeleteButton alias={miniLink.alias} removeMiniLink={removeMiniLink}/>
+        </div>
       </div>
     </div>
     )

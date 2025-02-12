@@ -1,19 +1,14 @@
-import StatsButton from "./buttons/StatsButton";
-import DeleteButton from "./buttons/DeleteButton";
+
 
 interface MiniLinkVisitsPropTypes {
   totalVisits: number;
   currentMonthVisits: number;
   lastMonthVisits: number;
-  alias: string;
-  removeMiniLink: (alias: string) => Promise<void>;
 }
 
 
 function MiniLinkVisits(
-  {
-    totalVisits, currentMonthVisits, lastMonthVisits, alias, removeMiniLink
-  }: MiniLinkVisitsPropTypes
+  {totalVisits, currentMonthVisits, lastMonthVisits}: MiniLinkVisitsPropTypes
 ): JSX.Element {
 
   const generateDescription = () => {
@@ -32,12 +27,7 @@ function MiniLinkVisits(
       <div className="stat-title">Total visits</div>
       <div className="stat-value">{totalVisits}</div>
       <div className="stat-desc">{generateDescription()}</div>
-      <div className="flex flex-row gap-4 items-center justify-center">
-        <StatsButton/>
-        <DeleteButton alias={alias} removeMiniLink={removeMiniLink}/>
-      </div>
     </div>
-
   )
 }
 
