@@ -6,6 +6,7 @@ import MiniLinkCards from "./composites/MiniLinkCards";
 import { getAllMiniLinks } from "./api/getMiniLinks";
 import getStatus from "./api/getStatus";
 import deleteMiniLink from "./api/deleteMiniLink";
+import LineGraph from "./components/LineGraph";
 
 function App() {
 

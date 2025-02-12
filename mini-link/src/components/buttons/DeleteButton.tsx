@@ -27,32 +27,32 @@ function DeleteButton(
         onClick={showWarning}
         Icon={DeleteIcon}
       />
-    <dialog id="delete_confirmation" className="modal modal-bottom sm:modal-middle ">
-      <div className="modal-box rounded-xl">
-        <h3 className="font-bold text-lg">
-          Are you sure you want to delete this mini link?
-        </h3>
-        <p className="py-4">
-          This will delete this mini link permanently.
-          You cannot undo this action.
-        </p>
-        <div className="modal-action">
-          <form method="dialog">
-            <div className="flex flex-row gap-4">
-              <BaseButton
-                className="btn-outline btn-neutral"
-                text="Cancel"
-              />
-              <BaseButton
-                className="btn-error"
-                text="Delete"
-                onClick={handleRemoval}
-              />
-            </div>
-          </form>
+      <dialog id="delete_confirmation" className="modal modal-bottom sm:modal-middle ">
+        <div className="modal-box rounded-xl">
+          <h3 className="font-bold text-lg">
+            Are you sure you want to delete this mini link?
+          </h3>
+          <p className="py-4">
+            This will delete this mini link permanently.
+            You cannot undo this action.
+          </p>
+          <div className="modal-action">
+            <form method="dialog">
+              <div className="flex flex-row gap-4">
+                <BaseButton
+                  className="btn-outline btn-neutral"
+                  text="Cancel"
+                />
+                <BaseButton
+                  className="btn-error"
+                  text="Delete"
+                  onClick={handleRemoval}
+                />
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
-    </dialog>
+      </dialog>
     </>
   )
 }

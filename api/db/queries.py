@@ -102,7 +102,7 @@ def delete_mini_link(
                 MiniLinkVisits.mini_link_id == mini_link.id
             )
         )
-        
+
         session.delete(mini_link)
         session.commit()
     return mini_link
