@@ -3,7 +3,7 @@ import BaseButton from "../base/BaseButton";
 import BarGraphIcon from "../../icons/BarGraphIcon";
 import XButton from "./XButton";
 import BarGraph from "../BarGraph";
-
+import getMonthlyVisitors from "../../api/getMonthlyVisitors";
 
 interface StatsButtonPropTypes {
   alias: string;
@@ -13,18 +13,25 @@ function StatsButton(
   { alias }: StatsButtonPropTypes): JSX.Element
 {
   const [isLoading, setIsLoading] = useState(true);
+  const [labels, setLabels] = useState<string[] | null>(null);
+  const [values, setValues] = useState<number[] | null>(null)
 
-  const showDetails = () => {
+  const showDetails = async () => {
     const modalId = `mini_link_details_${alias}`;
     const modal = document.getElementById(modalId) as HTMLDialogElement | null;
     modal?.showModal();
-    console.log(`${alias}: ${isLoading}`)
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 1000)
+    if (!isLoading) return;
+    try {
+      const [labels, values] = await getMonthlyVisitors(alias);
+      setLabels(labels);
+      setValues(values);
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 3000)
+    } catch (err) {
+      console.error(err);
+    }
   }
-
-
 
   return (
     <>
@@ -35,7 +42,11 @@ function StatsButton(
       />
       <dialog id={`mini_link_details_${alias}`}className="modal modal-bottom sm:modal-middle ">
       <div className="modal-box">
-        <BarGraph isLoading={isLoading} labels={['thing', 'other', 'diamond']} values={[70, 50, 30]}/>
+        <BarGraph
+          isLoading={isLoading}
+          labels={labels as string[]}
+          values={values as number[]}
+        />
         <div className="modal-action mt-0">
           <form method="dialog">
             <XButton/>
