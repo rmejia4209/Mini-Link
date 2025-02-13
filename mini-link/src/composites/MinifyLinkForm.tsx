@@ -3,7 +3,7 @@ import useObject from "../hooks/useObject";
 import LinkInput from "../components/LinkInput";
 import AliasInput from "../components/AliasInput";
 import ServerStatus from "../components/ServerStatus";
-import MinifyLinkButton from "../components/MinifyLinkButton";
+import MinifyLinkButton from "../components/buttons/MinifyLinkButton";
 import { createMiniLink } from "../api/createMiniLink";
 
 interface FormActionTypes {

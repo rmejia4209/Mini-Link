@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from typing import Annotated
 from fastapi import Depends
-from sqlmodel import Session, select, desc, func
+from sqlmodel import Session, select, desc, func, delete
 from .config import SessionDep
 from ..models import MiniLinkCreate, MiniLinkPublic
 from .models import MiniLink, UserSession, MiniLinkVisits
@@ -97,6 +97,12 @@ def delete_mini_link(
 ) -> MiniLink | None:
     mini_link = get_mini_link(alias, user_session_id, session)
     if mini_link:
+        session.exec(
+            delete(MiniLinkVisits).where(
+                MiniLinkVisits.mini_link_id == mini_link.id
+            )
+        )
+
         session.delete(mini_link)
         session.commit()
     return mini_link
@@ -191,3 +197,29 @@ def add_demo_data(
         add_random_visits(db_mini_link.id, session)
         response_data.append(aggregate_stats(db_mini_link, session))
     return response_data
+
+
+def get_monthly_visitors(
+    alias: str, user_session_id: UserSessionDep, session: SessionDep
+) -> dict[datetime, int]:
+    query = select(MiniLink.id).where(
+        MiniLink.alias == alias, MiniLink.user_session_id == user_session_id
+    )
+    mini_link_id = session.exec(query).first()
+
+    now = datetime.now()
+    start = datetime(year=now.year, month=now.month, day=1)
+    end = datetime.now() + timedelta(days=1)
+    visits = get_visits_in_time_frame(mini_link_id, session, start, end)
+    stats = {start: visits}
+    while visits and len(stats) < 12:
+        end = start
+        month, year = end.month - 1, end.year
+        if month < 1:
+            month = 12
+            year -= 1
+        start = datetime(year=year, month=month, day=1)
+        stats[start] = get_visits_in_time_frame(
+            mini_link_id, session, start, end
+        )
+    return stats
