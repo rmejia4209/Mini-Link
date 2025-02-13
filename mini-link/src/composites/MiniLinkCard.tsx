@@ -3,6 +3,7 @@ import MiniLinkVisits from "../components/MiniLinkVisits";
 import MiniLinkURL from "../components/MiniLinkURL";
 import StatsButton from "../components/buttons/StatsButton";
 import DeleteButton from "../components/buttons/DeleteButton";
+import ShowQRCodeButton from "../components/buttons/ShowQRCode";
 
 
 interface MiniLinkCardPropTypes {
@@ -25,6 +26,7 @@ function MiniLinkCard(
           lastMonthVisits={miniLink.lastMonthVisits}
         />
         <div className="flex flex-row gap-4 items-center justify-center">
+          <ShowQRCodeButton alias={miniLink.alias}/>
           <StatsButton alias={miniLink.alias}/>
           <DeleteButton alias={miniLink.alias} removeMiniLink={removeMiniLink}/>
         </div>
