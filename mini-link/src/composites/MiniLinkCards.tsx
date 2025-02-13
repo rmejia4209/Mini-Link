@@ -15,7 +15,13 @@ function MiniLinkCards(
     <div className="flex flex-col items-center w-screen">
       <div className="max-w-fit">
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {miniLinks.map((link, i) => <MiniLinkCard key={i} miniLink={link} removeMiniLink={removeMiniLink}/>)}
+          {miniLinks.map((link) => (
+            <MiniLinkCard
+              key={link.alias}
+              miniLink={link}
+              removeMiniLink={removeMiniLink}
+            />
+          ))}
         </div>
       </div>
     </div>  

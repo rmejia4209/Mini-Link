@@ -1,15 +1,30 @@
+import { useState } from "react";
 import BaseButton from "../base/BaseButton";
 import BarGraphIcon from "../../icons/BarGraphIcon";
 import XButton from "./XButton";
-import LineGraph from "../LineGraph";
+import BarGraph from "../BarGraph";
 
-function StatsButton(): JSX.Element {
+
+interface StatsButtonPropTypes {
+  alias: string;
+}
+
+function StatsButton(
+  { alias }: StatsButtonPropTypes): JSX.Element
+{
+  const [isLoading, setIsLoading] = useState(true);
 
   const showDetails = () => {
-    const modalId = 'mini_link_details';
+    const modalId = `mini_link_details_${alias}`;
     const modal = document.getElementById(modalId) as HTMLDialogElement | null;
     modal?.showModal();
+    console.log(`${alias}: ${isLoading}`)
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 1000)
   }
+
+
 
   return (
     <>
@@ -18,10 +33,10 @@ function StatsButton(): JSX.Element {
         onClick={showDetails}
         Icon={BarGraphIcon}
       />
-      <dialog id="mini_link_details" className="modal modal-bottom sm:modal-middle ">
-      <div className="modal-box p-2">
-        <LineGraph />
-        <div className="modal-action">
+      <dialog id={`mini_link_details_${alias}`}className="modal modal-bottom sm:modal-middle ">
+      <div className="modal-box">
+        <BarGraph isLoading={isLoading} labels={['thing', 'other', 'diamond']} values={[70, 50, 30]}/>
+        <div className="modal-action mt-0">
           <form method="dialog">
             <XButton/>
           </form>

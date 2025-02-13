@@ -213,7 +213,6 @@ def get_monthly_visitors(
     visits = get_visits_in_time_frame(mini_link_id, session, start, end)
     stats = {start: visits}
     while visits and len(stats) < 12:
-        print('working')
         end = start
         month, year = end.month - 1, end.year
         if month < 1:

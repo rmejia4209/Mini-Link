@@ -9,7 +9,14 @@ ChartJS.register(
   CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, Filler
 );
 
-function LineGraph() {
+
+interface BarGraphPropTypes {
+  isLoading: boolean;
+  labels: string[];
+  values: number[];
+}
+
+function BarGraph({ isLoading, labels, values }: BarGraphPropTypes) {
   const [colors, setColors] = useState({
     fillColor: '#000000',
     borderColor: '#000000',
@@ -20,9 +27,9 @@ function LineGraph() {
 
   const data = {
     
-    labels: ['Jan', 'Feb', 'Mar', 'Apl', 'May', 'Jun', 'July', 'Aug', 'Sep', 'Nov', 'Dec'],
+    labels: labels,
     datasets: [{
-      data: [65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56],
+      data: values,
       backgroundColor: colors.fillColor,
       borderColor: colors.borderColor,
       borderWidth: 2
@@ -32,6 +39,7 @@ function LineGraph() {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       title: {
         display: true,
@@ -93,10 +101,19 @@ function LineGraph() {
   }, []);
 
   return (
-    <div className='bg-base-100'>
-      <Bar data={data} options={options} />
+    <div className='bg-base-100 h-56'>
+      {
+        isLoading
+        ?( 
+          <div className="flex items-center justify-center min-h-56">
+            <span className="loading loading-ring loading-lg text-primary">
+            </span>
+          </div>
+        )
+        :<Bar className="w-full h-full" data={data} options={options}/>
+      }
     </div>
   )
 };
 
-export default LineGraph;
+export default BarGraph;
