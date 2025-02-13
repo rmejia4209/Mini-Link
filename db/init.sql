@@ -33,8 +33,25 @@ CREATE TABLE mini_link_visits (
     FOREIGN KEY (mini_link_id) REFERENCES mini_links(id)
 );
 
+
 -- Create event to automatically delete expired mini links
+DELIMITER //
 CREATE EVENT IF NOT EXISTS delete_expired_links
 ON SCHEDULE EVERY 1 DAY
 DO
-DELETE FROM mini_links WHERE expiration < NOW();
+BEGIN
+
+    DELETE mini_link_visits
+    FROM mini_link_visits
+    JOIN mini_links ON mini_link_visits.mini_link_id = mini_links.id
+    WHERE mini_links.expiration < NOW();
+
+    DELETE FROM mini_links WHERE expiration < NOW();
+
+    DELETE user_sessions
+    FROM user_sessions
+    LEFT JOIN mini_links ON user_sessions.id = mini_links.user_session_id
+    WHERE mini_links.id IS NULL;
+
+END //
+DELIMITER ;
