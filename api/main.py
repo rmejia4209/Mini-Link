@@ -1,4 +1,5 @@
 
+from datetime import datetime
 from typing import Any, Annotated
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
@@ -7,7 +8,7 @@ from .models import MiniLinkPublic
 from .db.models import MiniLink
 from .db.queries import (
     add_mini_link, get_all_mini_links, get_mini_link_details, get_redirect_url,
-    delete_mini_link, add_demo_data
+    delete_mini_link, add_demo_data, get_monthly_visitors
 )
 
 origins = ['http://localhost:5173']
@@ -60,6 +61,13 @@ def api_get_mini_link_details(
     if not mini_link:
         raise HTTPException(status_code=404, detail='Mini Link Not Found')
     return mini_link
+
+
+@app.get('/get-monthly-visitors/{alias}')
+def api_get_monthly_visitors(
+    monthly_visitors: Annotated[dict[str, int], Depends(get_monthly_visitors)]
+) -> dict[datetime, int]:
+    return monthly_visitors
 
 
 @app.get("/{alias}")

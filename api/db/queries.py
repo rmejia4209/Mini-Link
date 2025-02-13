@@ -197,3 +197,30 @@ def add_demo_data(
         add_random_visits(db_mini_link.id, session)
         response_data.append(aggregate_stats(db_mini_link, session))
     return response_data
+
+
+def get_monthly_visitors(
+    alias: str, user_session_id: UserSessionDep, session: SessionDep
+) -> dict[datetime, int]:
+    query = select(MiniLink.id).where(
+        MiniLink.alias == alias, MiniLink.user_session_id == user_session_id
+    )
+    mini_link_id = session.exec(query).first()
+
+    now = datetime.now()
+    start = datetime(year=now.year, month=now.month, day=1)
+    end = datetime.now() + timedelta(days=1)
+    visits = get_visits_in_time_frame(mini_link_id, session, start, end)
+    stats = {start: visits}
+    while visits and len(stats) < 12:
+        print('working')
+        end = start
+        month, year = end.month - 1, end.year
+        if month < 1:
+            month = 12
+            year -= 1
+        start = datetime(year=year, month=month, day=1)
+        stats[start] = get_visits_in_time_frame(
+            mini_link_id, session, start, end
+        )
+    return stats
