@@ -11,7 +11,7 @@ function DeleteButton(
 {
 
   const showWarning = () => {
-    const modalId = 'delete_confirmation';
+    const modalId = `delete_confirmation_${alias}`;
     const modal = document.getElementById(modalId) as HTMLDialogElement | null;
     modal?.showModal();
   }
@@ -27,7 +27,7 @@ function DeleteButton(
         onClick={showWarning}
         Icon={DeleteIcon}
       />
-      <dialog id="delete_confirmation" className="modal modal-bottom sm:modal-middle ">
+      <dialog id={`delete_confirmation_${alias}`} className="modal modal-bottom sm:modal-middle ">
         <div className="modal-box rounded-xl">
           <h3 className="font-bold text-lg">
             Are you sure you want to delete this mini link?
